@@ -12,8 +12,6 @@ class Codec:
     
     '''
 
-
-    
     def encode(self, longUrl):
         """Encodes a URL to a shortened URL.
         

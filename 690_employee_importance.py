@@ -27,4 +27,28 @@ class Solution:
             res += self.helper(emap, sub)
         return res
             
+class Solution:
+    def getImportance(self, employees, id):
+        """
+        :type employees: Employee
+        :type id: int
+        :rtype: int
+        """
+        emp = self.id_emp(employees, id)
+        return self.helper(emp, employees)
+    
+    def helper(self, emp, employees):
+        if len(emp.subordinates) == 0:
+            return emp.importance
+        
+        sub_total = emp.importance
+        for id in emp.subordinates:
+            cur_emp = self.id_emp(employees, id)
+            sub_total += self.helper(cur_emp, employees)
+        return sub_total
             
+    def id_emp(self, employees, id):
+        for employee in employees:
+            if employee.id == id:
+                return employee
+    
