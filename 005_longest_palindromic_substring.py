@@ -13,8 +13,27 @@ class Solution(object):
         为2*n-1(字符作为中心有n个，间隙有n-1个）。对于每个中心往两边扫描的复杂度
         为O(n),所以时间复杂度为O((2*n-1)*n)=O(n^2),空间复杂度为O(1)，代码如下：
         '''
+
         res = ''
+        for i in range(len(s)):
+            str1 = self.helper(s, i, i)
+            if len(str1) > len(res):
+                res = str1
+            str2 = self.helper(s, i, i+1)
+            if len(str2) > len(res):
+                res = str2
+        return res
         
+    def helper(self, s, l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1
+            r += 1
+        return s[l+1: r]
+
+
+'''
+
+        res = ''
         # n letter + n-1 space = 2n-1
         cyc = 2 * len(s) - 1
         for i in range(cyc):
@@ -36,3 +55,4 @@ class Solution(object):
             r += 1
             
         return s[l+1:r]
+'''

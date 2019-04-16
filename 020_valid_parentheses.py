@@ -1,3 +1,25 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if not s:
+            return True
+        stack = []
+        push_set = ['(', '{', '[']
+        poll_set = [')', '}', ']']
+        dic = {')':'(', '}':'{', ']':'['}
+        
+        for s1 in s:
+            if s1 in push_set:
+                stack.append(s1)
+            elif s1 in poll_set:
+                if not stack or dic[s1] != stack.pop():
+                    return False
+            else:
+                return False
+        if stack:
+            return False
+        return True
+
+'''
 class Solution(object):
     def isValid(self, s):
         """
@@ -20,3 +42,4 @@ class Solution(object):
         if stack:
             return False
         return True
+'''

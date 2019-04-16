@@ -12,4 +12,4 @@ class Solution(object):
                 hm.pop(num)
             else:
                 hm[num] = 1
-        return hm.keys()[0]
+        return list(hm.keys())[0]
