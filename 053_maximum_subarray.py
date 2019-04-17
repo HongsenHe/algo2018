@@ -13,3 +13,16 @@ class Solution(object):
             # as current num could be < 0, after add on, this could be < global max
             res = max(local, res)
         return res
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        res = nums[0]
+        cur_max = 0
+        
+        for num in nums:
+            cur_max += num
+            if cur_max > res:
+                res = cur_max
+        # 如果当前元素让合集是负数，不如舍弃，归零。
+        if cur_max < 0:
+                cur_max = 0
+        return res
