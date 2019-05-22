@@ -5,6 +5,12 @@ class Solution:
         :rtype: int
         """
         '''
+
+        节点是1-n,
+        如果root是k, left-tree # = [1, k-1], right-tree # = [k+1, n]
+		唯一二叉树的数量就是Left-tree# x Right-tree#
+		和具体k无关，和多少个节点有关系。所以就是经典的dp问题。
+
         DP问题，先观察一下下：
         1. 如果n=0, 没节点那就是一个答案即空树！，dp[0] = 1
         2. 如果n=1, 有一个节点，那就是有一个答案root only， dp[1] = 1
@@ -21,9 +27,9 @@ class Solution:
                \          /                /        \
                 3        2                1          2
             
-        dp[3] = dp[0] + dp[2] (root = 1, left-tree = 0 node, right-tree = 2 nodes)
-              + dp[1] + dp[1] (root = 2, left-tree = 1 node, right-tree = 1 node)
-              + dp[2] + dp[0] (root = 3, left-tree = 2 nodes, right-tree = 0 node)
+        dp[3] = dp[0] * dp[2] (root = 1, left-tree = 0 node, right-tree = 2 nodes)
+              + dp[1] * dp[1] (root = 2, left-tree = 1 node, right-tree = 1 node)
+              + dp[2] * dp[0] (root = 3, left-tree = 2 nodes, right-tree = 0 node)
               
         观察分析xxx 可以推断
         dp[i] = sum (dp[j] * dp[i-j-1]), j = [0, i)
