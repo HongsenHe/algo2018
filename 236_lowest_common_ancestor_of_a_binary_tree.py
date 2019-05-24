@@ -30,6 +30,9 @@ class Solution(object):
             return root
         
         # divide 分别看左右子树，看看能否找到，在满足上述条件就跳出来
+        # 如何理解：p和q 不变，就是已知条件，但如果现在的根节点不是root, 
+        # 而是root.left 算法是一样的，（root.left也可能是答案LCA）
+        # 分治法，把root.left 也看成根节点，然后计算。
         left = self.lowestCommonAncestor(root.left, p, q)
         right = self.lowestCommonAncestor(root.right, p, q)
         
