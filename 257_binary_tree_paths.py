@@ -23,6 +23,7 @@ class Solution(object):
             res.append(each)
             return 
         
+        # adding child treeNode, not current root, otherwise init root will be added twice
         if root.left:
             self.helper(root.left, res, each + "->" + str(root.left.val)) 
         if root.right:
