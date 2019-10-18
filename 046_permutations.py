@@ -1,32 +1,20 @@
 class Solution:
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        
+    def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
-        level = []
+        self.helper(nums, res, [])
         
-        if not nums:
-            return res
-        
-        self.helper(nums, level, res)
         return res
-        
-        
-    def helper(self, nums, level, res):
-        if len(nums) == len(level):
-            res.append(list(level))
+    
+    def helper(self, nums, res, cur):
+        if len(cur) == len(nums):
+            res.append(list(cur))
             return
         
         for i in range(len(nums)):
-            cur = nums[i]
-            if cur in level:
+            # duplicated, skip
+            if nums[i] in cur:
                 continue
-            level.append(cur)
-            self.helper(nums, level, res)
-            level.pop()
-            
-        
+            cur.append(nums[i])
+            self.helper(nums, res, cur)
+            cur.pop(-1)
         
