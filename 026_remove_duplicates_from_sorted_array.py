@@ -7,7 +7,8 @@ class Solution(object):
         '''
         slow point k and fast point i, if same, fast point is duplicated
         then keep moving fast point until slow != fast pointer
-        then assign fast value to slow+1 pointer
+        then assign fast value to slow+1 pointer.
+        就是保持一个慢速的指针，构成新的list, 让快速的跑，略过重复的
         '''
         if not nums:
             return 0
