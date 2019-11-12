@@ -26,4 +26,13 @@ class Solution:
                     dp[i] = True
                     break
         return dp[-1]
+
+        
+        # for i in range(1, len(s)+1):
+        #     first = s[0:i]
+        #     if first in wordDict:
+        #         second = s[i:]
+        #         if not second or second in wordDict or self.wordBreak(second, wordDict):
+        #             return True
+        # return False
         
