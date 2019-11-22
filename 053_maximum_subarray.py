@@ -26,3 +26,15 @@ class Solution(object):
         if cur_max < 0:
                 cur_max = 0
         return res
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        res = nums[0]
+        cur = nums[0]
+        for num in nums[1:]:
+            # if previous cur_max < 0, count from current num
+            if cur < 0:
+                cur = num
+            else:
+                cur += num
+            res = max(res, cur)
+        return res
