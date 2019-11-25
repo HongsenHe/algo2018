@@ -21,3 +21,10 @@ class Solution:
                     sk.append(cur.right)
             nodes.append(n)
         return pow(2, len(nodes)-1) - 1 + nodes[-1]
+
+        '''
+        # recursive
+        if not root:
+            return 0
+        return self.countNodes(root.left) + self.countNodes(root.right) + 1
+        '''
