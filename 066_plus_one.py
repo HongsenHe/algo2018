@@ -14,6 +14,7 @@ class Solution:
                 res.insert(0, cur)
             else:
                 res.insert(0, cur)
+                # if current result is < 10, just copy the rest of nums
                 for j in range(i-1, -1, -1):
                     res.insert(0, digits[j])
                 return res
