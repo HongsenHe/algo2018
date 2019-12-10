@@ -1,4 +1,4 @@
-class Solution:
+        class Solution:
     def searchMatrix(self, matrix, target):
         """
         :type matrix: List[List[int]]
