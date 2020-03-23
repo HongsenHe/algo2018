@@ -21,8 +21,8 @@ class Solution(object):
             degrees[k] += 1
             
         # 经典BFS
-        import Queue
-        queue = Queue.Queue(maxsize = numCourses)
+        import queue
+        queue = queue.Queue(maxsize = numCourses)
         count = 0
         
         # 把入度是0 即起始点 加入queue

@@ -26,8 +26,8 @@ class Solution(object):
             degrees[i] += 1
 
         # 经典BFS 走起！
-        import Queue
-        queue = Queue.Queue(maxsize = numCourses)
+        import queue
+        queue = queue.Queue(maxsize = numCourses)
 
         for i in range(numCourses):
             # 先计算所有入度是0的点，意味着他们都是起始点
