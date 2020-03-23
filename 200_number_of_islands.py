@@ -22,11 +22,11 @@ class Solution(object):
     
     def dfs(self, grid, i, j):
         # 套路： 1. 边界条件
-        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != '1':
+        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == '0':
             return
         
         # 2. do something, 即变成海水
-        grid[i][j] = '#'
+        grid[i][j] = '0'
         
         # 3. 在此基础上，继续搜索
         self.dfs(grid, i+1, j)
