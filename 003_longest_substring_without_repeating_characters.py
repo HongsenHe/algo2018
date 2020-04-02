@@ -1,4 +1,24 @@
 class Solution(object):
+    # best
+    def lengthOfLongestSubstring(self, s):
+        # keep maintain a distinct set, if dup found, remove from set
+        pool = set()
+        i = 0
+        j = 0
+        res = 0
+        
+        while j < len(s):
+            # new char
+            if s[j] not in pool:
+                pool.add(s[j])
+                j += 1
+                res = max(res, len(pool))
+            else:
+                pool.remove(s[i])
+                i += 1
+        return res
+                
+    # better
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
@@ -22,3 +42,19 @@ class Solution(object):
             res = max(res, end-start+1)
         return res
             
+
+    # naive!
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        res = 0
+        
+        for i in range(len(s)):
+            count = 0
+            visited = set()
+            for j in range(i, len(s)):
+                if s[j] in visited:
+                    break
+                count += 1
+                visited.add(s[j])
+                
+            res = max(res, count)
+        return res

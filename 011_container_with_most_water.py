@@ -11,6 +11,7 @@ class Solution(object):
         
         while left < right:
             curArea = min(height[left], height[right]) * (right - left)
+            # 瓶颈在于❤矮的也就是left， 要移动这个瓶颈
             if height[left] < height[right]:
                 left += 1
             else:
