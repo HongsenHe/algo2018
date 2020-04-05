@@ -1,4 +1,24 @@
 class Solution:
+    # updated 04042020
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        if not triangle:
+            return 0
+        m = len(triangle)
+        # 一开始初始化dp就是用三角形最后一行即dp = triangle[-1]
+        dp = triangle[-1]
+                
+        for i in range(m-2, -1, -1):
+            # 因为是三角形，j 只计算到本行末尾就好，虽然是个矩阵来模拟dp
+            for j in range(len(triangle[i])):
+                '''
+                从下到上，每次都看当前行的下一行，只有两个即正下方（dp[j])
+                和下右方 (dp[j+1])，取小的 加上当前行的数字triangle[i][j]
+                就是当前行dp[j]的数值
+                '''
+                dp[j] = min(dp[j], dp[j+1]) + triangle[i][j]
+        return dp[0]
+        
+
     def minimumTotal(self, triangle):
         """
         :type triangle: List[List[int]]

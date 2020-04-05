@@ -1,24 +1,15 @@
 class Solution:
-    def minPathSum(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        if not grid:
-            return 0
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid) + 1
+        n = len(grid[0]) + 1
         
-        # 2D array 初始化套路-。- 要加上上一个值
-        m = len(grid)
-        n = len(grid[0])
-        dp = [[0 for i in range(n)] for j in range(m)]
-        dp[0][0] = grid[0][0]
-        for i in range(1, m):
-            dp[i][0] = dp[i-1][0] + grid[i][0]
-        for j in range(1, n):
-            dp[0][j] = dp[0][j-1] + grid[0][j]
-            
+        # 初始化，size都加上1 形成一个外圈，并且附上初始值0
+        dp = [[float('inf') for _ in range(n)] for __ in range(m)]
+        dp[0][1] = 0
+        dp[1][0] = 0
+        
         for i in range(1, m):
             for j in range(1, n):
-                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
-        return dp[m-1][n-1]
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i-1][j-1]
+        return dp[-1][-1]
         
