@@ -1,21 +1,21 @@
 class Solution(object):
-    # best
+    # best, updated 04062020
     def lengthOfLongestSubstring(self, s):
-        # keep maintain a distinct set, if dup found, remove from set
+        left = 0
+        right = 0
         pool = set()
-        i = 0
-        j = 0
         res = 0
         
-        while j < len(s):
-            # new char
-            if s[j] not in pool:
-                pool.add(s[j])
-                j += 1
+        while right < len(s):
+            if s[right] not in pool:
+                pool.add(s[right])
+                right += 1
                 res = max(res, len(pool))
             else:
-                pool.remove(s[i])
-                i += 1
+                # if dup, remove 1 left element, even that one
+                # is not the dup one.
+                pool.remove(s[left])
+                left += 1
         return res
                 
     # better
