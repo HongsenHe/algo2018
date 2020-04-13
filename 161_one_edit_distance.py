@@ -1,6 +1,5 @@
 class Solution:
     def isOneEditDistance(self, s: str, t: str) -> bool:
-        res = 0
         m, n = len(s), len(t)
         # 为了方便，保持s长度小于t
         if m > n:
