@@ -1,13 +1,9 @@
 class Solution:
-    def findDisappearedNumbers(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
         '''
-        如何找到某些数字没在序列里？比如5，6不在[4,3,2,7,8,2,3,1]里面
-        可以看index=5，6的数字情况。也就是变动非index=5，6 正数变负数
-        再遍历一下数列，如果当前的没有被动过，就是index=5，6 即是结果。
+        获得遇到当前的数字的绝对值index 改变数组中index的数字变为负数
+        比如4，就把nums[4]的数字改为负数，这样算是找到了'4'的位置
+        循环一遍发现只有index 5和6的数字还是正数，说明没有5和6的idx, 就是答案！
         '''
         
         nums = [0] + nums
@@ -16,6 +12,7 @@ class Solution:
             # 改变非5, 6的数字，变为负数，即使重复也没事
             nums[index] = -abs(nums[index])
         return [i for i in range(len(nums)) if nums[i] > 0]
+
 
     # 04182019
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
