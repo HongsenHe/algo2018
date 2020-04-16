@@ -6,6 +6,23 @@
 #         self.right = None
 
 class Solution:
+    def postorder(self, root):
+    res = []
+    if not root:
+        return res
+    
+    sk = [root]
+    
+    while sk:
+        root = sk.pop()
+        res.insert(0, root.val)
+        if root.left:
+            sk.append(root.left)
+        if root.right:
+            sk.append(root.right)
+        
+    return res
+    
     def postorderTraversal(self, root: TreeNode) -> List[int]:
         res = []
         self.helper(res, root)

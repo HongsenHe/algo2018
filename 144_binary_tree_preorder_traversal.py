@@ -6,6 +6,20 @@
 #         self.right = None
 
 class Solution:
+    # updated 04152020
+    def preorderTraversal(self, root):
+        res = []
+        sk = []
+        
+        while root or sk:
+            while root:
+                res.append(root.val)
+                sk.append(root)
+                root = root.left
+                
+            cur = sk.pop()
+            root = cur.right
+        return res
     '''
     def preorderTraversal(self, root):
         """

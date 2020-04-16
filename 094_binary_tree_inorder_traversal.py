@@ -6,6 +6,21 @@
 #         self.right = None
 
 class Solution:
+    # updated at 04142020
+    def inorderTraversal(self, root):
+        res = []
+        sk = []
+        
+        while root or sk:
+            while root:
+                sk.append(root)
+                root = root.left
+                
+            cur = sk.pop()
+            res.append(cur.val)
+            root = cur.right
+            
+        return res
     '''
     def inorderTraversal(self, root):
         """
