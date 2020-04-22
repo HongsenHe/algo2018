@@ -17,6 +17,8 @@ class Solution:
                 return root
         return None
         '''
+
+        # use O(H) space to maintain the recursive stack
         if not root or root.val == val:
             return root
         if val < root.val:
