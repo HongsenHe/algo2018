@@ -41,3 +41,23 @@ class Solution:
         return step3
         
         # 耶稣说：“我就是道路、真理、生命。要不是藉着我，没有人能到父那里去。約翰福音 14:6
+
+
+# updated 04222020
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        # recursion with memoization
+        memo = [0] * (n+1)
+        return self.helper(0, n, memo)
+    
+    def helper(self, i, n, memo):
+        if i > n:
+            return 0
+        if i == n:
+            return 1
+        if memo[i] > 0:
+            return memo[i]
+        
+        memo[i] = self.helper(i+1, n, memo) + self.helper(i+2, n, memo)
+        return memo[i]
+        
