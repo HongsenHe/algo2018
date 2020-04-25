@@ -1,3 +1,5 @@
+import heapq
+
 class Solution:
     '''
     先按照开始时间排序, 用一个数列指保存每个房间的结束时间，数列大小即房间多少。
@@ -18,6 +20,10 @@ class Solution:
             if heap and interval[0] >= heap[0]:
                 # update this room release time
                 heapq.heapreplace(heap, interval[1])
+                
+                # or use
+                # heapq.heappop(heap)
+                # heapq.heappush(heap, interval[1])
             else:
                 # 如果当前的会议开始时间1pm 小于最早结束时间2pm, 则另起炉灶放到heap里
                 # add a new room and set release time
