@@ -4,6 +4,16 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        # updated 0505, 108ms
+        s_list = list(s)
+        hm = Counter(s_list)
+        
+        for i, c in enumerate(s):
+            if hm[c] == 1:
+                return i
+        return -1
+        
+        
         #my solution, practice defaultdict, 180ms
         groups = collections.defaultdict(list)
         for i in range(len(s)):
