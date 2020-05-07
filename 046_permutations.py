@@ -2,7 +2,6 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
         self.helper(nums, res, [])
-        
         return res
     
     def helper(self, nums, res, cur):
@@ -10,11 +9,9 @@ class Solution:
             res.append(list(cur))
             return
         
-        for i in range(len(nums)):
-            # duplicated, skip
-            if nums[i] in cur:
+        for num in nums:
+            if num in cur:
                 continue
-            cur.append(nums[i])
+            cur.append(num)
             self.helper(nums, res, cur)
-            cur.pop(-1)
-        
+            cur.pop()
