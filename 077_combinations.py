@@ -6,6 +6,7 @@ class Solution:
         
     def helper(self, res, k, n, each, start):
         if len(each) == k:
+            # create a new list, add into res
             res.append(list(each))
             return
         
