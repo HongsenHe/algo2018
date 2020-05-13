@@ -9,29 +9,27 @@ class Solution:
         偷，意味着前面的你就不能偷，不能太贪是吧。但也要偷前面前面的， why not?
         不偷，你可以偷前面的。但不能偷前面前面的。然后取最大。
         
-        money[i] 表示到了第i个房子，能偷多少？第i个房子，但nums index其实是i-1
-        好比到了第3个房子，你能偷多少money[3], 但是在nums里面，index = 2 
-        即，i-1, 当前房子能偷nums[i-1]
-        money[i] = max(nums[i-1] + money[i-2], money[i-1])
-        没有房子的时候，设置为0， 最后就看有n个房子的时候能偷多少，也就是money[n],
+        不必N+1, 直接定义前两个，dp[0]肯定是第一个了
+        dp[1]要看第一个房子nums[0]和nums[1]哪个大用哪个
+        之后的for loop就从第三个房子nums[2]开始，递归式不变
         '''
         
-        
         # Space O(n)
-        n = len(nums)        
-        if not nums:
+        if not nums or len(nums) == 0:
             return 0
-        if n < 3:
+        
+        if len(nums) < 3:
             return max(nums)
         
-        money = [0] * (n+1)
-        money[0] = 0
-        money[1] = nums[0]
-        for i in range(2, n+1):
-            # i 要从2开始，money[2] 代表偷第2个房子的时候的情况
-            # 所以这里要用i-1 也就是 nums[1] 也就是用第二个房子的价值
-            money[i] = max(nums[i-1] + money[i-2], money[i-1])
-        return money[n]
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i-2] + nums[i], dp[i-1])
+        
+        return dp[-1]
+            
         
         '''
         # Space O(1)
