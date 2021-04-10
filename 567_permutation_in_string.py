@@ -1,5 +1,31 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
+        # 04092021
+        '''
+        看到permutation并不是要求所有排列的组合，其本质是s1里有多少个a多少个b...
+        也就是求每个字母的数量。
+        对于一个str包含另一个str的问题，可以考虑滑动窗口问题。
+        这里面从头开始，选固定长度，依次比较字母的数量。
+        然后继续滑动，头减1，尾加1的模式，直到找到答案。
+        '''
+        
+        l1 = len(s1)
+        target = collections.Counter(s1)
+        
+        for i in range(len(s2) - l1 + 1):
+            # 如果当前字母都不在s1里，可以忽略
+            if s2[i] in target:
+                # 这里的sub_s2就是以i为起点，固定长度是s1的 substring
+                # 然后再看这个string的 字母数量，如果和s1相等就 True!
+                sub_s2 = collections.Counter(s2[i : i + l1])
+                if sub_s2 == target:
+                    return True
+                
+        return False
+
+
+
+
         if not s1 or not s2:
             return False
         
