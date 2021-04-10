@@ -14,6 +14,7 @@ class Solution(object):
             return False
         slow = fast = head
         while fast.next and fast.next.next:
+        # or say: while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
             
