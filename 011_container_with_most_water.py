@@ -1,20 +1,22 @@
-class Solution(object):
-    def maxArea(self, height):
-        """
-        :type height: List[int]
-        :rtype: int
-        """
-        #两个隔板的矮的那一个的高度乘以两个隔板的间距就是储水量。
-        res = 0
-        left = 0
-        right = len(height) - 1
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        '''
+        思考为什么不是同向双指针，而是相向双指针。
+        木桶原理：面积就是较短的木版min(left, right) 乘以他们的间距 right - left
+        然后打擂台和全局比较。如果哪个木版较短就移动他。直到双指针相会。
+        '''
         
-        while left < right:
-            curArea = min(height[left], height[right]) * (right - left)
-            # 瓶颈在于❤矮的也就是left， 要移动这个瓶颈
+        left, right = 0, len(height) - 1
+        res = float('-inf')
+        
+        while left <= right:
+            area = min(height[left],  height[right]) * (right - left)
             if height[left] < height[right]:
                 left += 1
             else:
                 right -= 1
-            res = max(res, curArea)
+                
+            res = max(res, area)
+            
         return res
+            
