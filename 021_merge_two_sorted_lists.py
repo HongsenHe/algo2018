@@ -29,4 +29,18 @@ class Solution(object):
             cur.next = l2
         return dummy.next
             
-            
+    def mergeTwoLists(self, l1, l2):
+        # recursion 04142021
+        if not l1 and not l2:
+            return None
+        
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        elif l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2

@@ -1,34 +1,37 @@
 # Definition for singly-linked list.
 # class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+import heapq
 
-from queue import PriorityQueue
+# 重写，来比较node.val 记一下。
+ListNode.__lt__ = lambda x, y: (x.val < y.val)
+
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        class Wrapper():
-            def __init__(self, node):
-                self.node = node
-            def __lt__(self, other):
-                return self.node.val < other.node.val
+        if not lists:
+            return None
         
-        head = dummy = ListNode(0)
-        q = PriorityQueue()
-        
-        # 把每个list的首个node放进去，已经排序过
-        for l in lists:
-            if l:
-                q.put(Wrapper(l))
+        # 常规写法，一个不断跑dummy, 一个固定点最后返回dummy_head.next
+        dummy = dummy_head = ListNode(0)
+        heap = []
+        # 循环一次input, 对于每一个list把他们都放进堆中，
+        # 自然就以node.val排序了。
+        for head in lists:
+            if head:
+                heapq.heappush(heap, head)
                 
-        while not q.empty():
-            node = q.get().node
-            dummy.next = node
+        while heap:
+            # 弹出来的就是最小的，python默认min heap
+            head = heapq.heappop(heap)
+            
+            # 赋值
+            dummy.next = head
             dummy = dummy.next
-            node = node.next
-            # 当前node是最小值，放到结果里，如果还有下一个，继续放入q
-            if node:
-                q.put(Wrapper(node))
-                
-        return head.next
-        
+            
+            # 如果当前list还有元素则继续加入Heap,  然后重排序
+            if head.next:
+                heapq.heappush(heap, head.next)
+                    
+        return dummy_head.next
