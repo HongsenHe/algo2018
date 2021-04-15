@@ -14,23 +14,29 @@ class Solution:
                 [4, 5, 1, 2, 3]             [3, 4, 5, 1, 2]
         
         '''
-        left = 0
-        right = len(nums) - 1
-        while left <= right:
-            mid = left + (right - left) // 2
-            if nums[mid] == target:
-                return mid
+        # 04152021, 套用模板，用 left + 1 < right, 先判断大的升序降序，再小范围找
+        left, right = 0, len(nums) - 1
+        
+        while left + 1 < right:
+            mid = (left + right) // 2
             
-            # continous raising, case 2
+            # 升序 case2
             if nums[left] <= nums[mid]:
                 if nums[left] <= target <= nums[mid]:
-                    right = mid - 1
+                    right = mid
                 else:
-                    left = mid + 1
-            # broken part, case 1
+                    left = mid
             else:
                 if nums[mid] <= target <= nums[right]:
-                    left = mid + 1
+                    left = mid
                 else:
-                    right = mid - 1
+                    right = mid
+        
+        # 找到分界点后分别判断
+        if nums[left] == target:
+            return left
+        if nums[right] == target:
+            return right
+        
         return -1
+        

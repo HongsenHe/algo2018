@@ -5,28 +5,48 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        if not nums:
-            return False
-        left = 0
-        right = len(nums) - 1
-        
-        while left <= right:
-            mid = left + (right-left) // 2
+
+        '''
+        04152021
+        如果数组里有重复数字，不一定用binary search
+        比如[1, 1, ..0... 1] 很多个1，只有一个0，找0
+        则要去重很多或者无法分一半，则退化成O(n) 
+        所以可以直接用暴力解法
+        '''
+        for i in range(len(nums)):
+            if nums[i] == target:
+                return True
+        return False
+
+
+
+        # binary search, worse case O(n)
+        left, right = 0, len(nums) - 1
+         
+        while left +  1 < right:
+            mid = (left + right) // 2
             
-            # skip duplicated numbers
+            # skip duplicated num
             while left < mid and nums[left] == nums[mid]:
                 left += 1
-                
+            
             if nums[mid] == target:
                 return True
             elif nums[left] <= nums[mid]:
                 if nums[left] <= target <= nums[mid]:
-                    right = mid - 1
+                    right = mid
                 else:
-                    left = mid + 1
+                    left = mid
             else:
                 if nums[mid] <= target <= nums[right]:
-                    left = mid + 1
+                    left = mid
                 else:
-                    right = mid - 1
+                    right = mid
+                    
+        if nums[left] == target or nums[right] == target:
+            return True
+        
         return False
+            
+            
+                

@@ -14,3 +14,6 @@ class Solution:
         return heapq.heappop(q)
                 
         
+        # O(nlogn) 04152021
+        nums.sort()
+        return nums[len(nums) - k]
