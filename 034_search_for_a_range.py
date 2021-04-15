@@ -1,46 +1,41 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        return(self.search_left(nums, target), self.search_right(nums, target))
-        
-    
-    def search_left(self, nums, target):
-        idx = -1
-        left = 0
-        right = len(nums) - 1
-        
-        while left <= right:
-            mid = left + (right - left) // 2
-            # two cases: narrow down by moving the right pointer to the mid
-            # and calculate left - mid side only
-            if nums[mid] >= target:
-                right = mid - 1
+        if not nums:
+            return [-1, -1]
+
+        return [self.binary_search_first(nums, target), self.binary_search_last(nums, target)]
+
+    def binary_search_first(self, nums, target):
+        start = 0
+        end = len(nums) - 1
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            # 要找first position 所以严格小于target才移动start
+            # [1, 2, 2, 2, 2, 2, 3] 希望尽量移动end指针缩小范围
+            if nums[mid] < target:
+                start = mid
             else:
-                left = mid + 1
-                
-            # find find the value, unlike the traditional BS, don't return
-            # keep this mid index, this part is doing left - mid, so if
-            # this mid is the only one, then use it. if it's not the left most
-            # just update it.
-            if nums[mid] == target:
-                idx = mid
-                
-        return idx
+                end = mid
+        if nums[start] == target:
+            return start
+        if nums[end] == target:
+            return end
+        return -1
     
-    
-    def search_right(self, nums, target):
-        idx = -1
-        left = 0
-        right = len(nums) - 1
-        
-        while left <= right:
-            mid = left + (right - left) // 2
+    def binary_search_last(self, nums, target):
+        start = 0
+        end = len(nums) - 1
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            # 要找last position 如果等于也移动start 指针，
+            # [1, 2, 2, 2, 2, 2, 3] 压缩到右边
             if nums[mid] <= target:
-                left = mid + 1
+                start = mid
             else:
-                right = mid - 1
-                
-            if nums[mid] == target:
-                # calculate mid - right side
-                idx = mid
-        return idx
-        
+                end = mid
+        if nums[end] == target:
+            return end
+        if nums[start] == target:
+            return start
+        return -1
+    
