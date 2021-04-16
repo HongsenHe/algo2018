@@ -1,21 +1,23 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        left = 0
-        right = len(nums) - 1
+        '''
+        继续使用经典二分模板。
+        通常来讲sorted array, mid <= right的值。
+        也就是最小值在left - mid部分，也就是压缩right部分，即right = mid
+        如果mid > right的值，则被rorated了，需要压缩left部分，即left = mid
         
-        while left < right:
-            mid = left + (right - left) // 2
+        最后求出两个临界点，然后比较二者。经典模板应用。
+        '''
+        left, right = 0, len(nums) - 1
+        
+        while left + 1 < right:
+            mid = (left + right) // 2
             
-            # usually mid data <= right data in sorted list
-            # if so, then the min data is in mid - right
             if nums[mid] > nums[right]:
-                # +1, as mid is not the min data, mid is already greater than right
-                # so use +1 for skipping the mid position
-                left = mid + 1
+                left = mid
             else:
-                # mid could be equal to right, so do not skip mid
-                # if mid < right, mid could be the min data, anyway do not skip mid
                 right = mid
                 
-        return nums[left]
-                
+        return min(nums[left], nums[right])
+            
+            
