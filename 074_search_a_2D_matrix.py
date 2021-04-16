@@ -5,42 +5,47 @@ class Solution:
         :type target: int
         :rtype: bool
         """
-        '''        
-        if not matrix:
+        if not matrix or not matrix[0]:
             return False
-        if not matrix[0]:
-            return False
-        # find which row
-        up = 0
-        down = len(matrix) - 1
+        
+        m = len(matrix)
+        n = len(matrix[0])
+        
+        up, down = 0, m - 1
+        
         while up + 1 < down:
-            mid = up + (down - up) // 2 
+            mid = (up + down) // 2
+            
             if matrix[mid][0] == target:
                 return True
             elif matrix[mid][0] < target:
                 up = mid
             else:
                 down = mid
-        
-        rowIdx = 0 
+            
+        row_idx = 0
+        # 找到第一列的两个指针进行比较，如果down比target大，
+        # 那么压缩下半部分，使用up行
         if matrix[down][0] > target:
-            rowIdx = up
+            row_idx = up
         else:
-            rowIdx = down
-        row = matrix[rowIdx]
+            row_idx = down
+            
+        arr = matrix[row_idx]
+        left, right = 0, n - 1
         
-        # find which column, the answer
-        left = 0
-        right = len(row) - 1
         while left + 1 < right:
-            mid = left + (right - left) // 2
-            if row[mid] == target:
+            mid = (left + right) // 2
+            
+            if arr[mid] == target:
                 return True
-            elif row[mid] < target:
+            elif arr[mid] < target:
                 left = mid
             else:
                 right = mid
-        if row[left] == target or row[right] == target:
+    
+        # 找到这一行的两个指针进行分别比较。
+        if arr[left] == target or arr[right] == target:
             return True
         return False
         '''
@@ -64,3 +69,4 @@ class Solution:
             else:
                 end = mid - 1
         return False
+        '''
