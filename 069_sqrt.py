@@ -1,38 +1,17 @@
 class Solution:
     def mySqrt(self, x: int) -> int:
-        left = 0
-        right = x
+        left, right = 0, x
         
-        while left <= right:
-            mid = left + (right-left) // 2
-            sq = mid * mid
-            
-            if sq < x:
-                left = mid + 1
-            elif sq > x:
-                right = mid - 1
+        while left + 1 < right:
+            mid = (left + right) // 2
+            if mid * mid < x:
+                left = mid
             else:
-                return mid
+                right = mid
+            
+        if right * right <= x:
+            return right
         
-        return right
-
-# class Solution:
-#     def mySqrt(self, x):
-#         """
-#         :type x: int
-#         :rtype: int
-#         """
-#         start = 1
-#         end = x
+        return left
         
-#         # find the last number which < x
-#         while start + 1 < end:
-#             mid = start + (end-start) // 2
-#             if mid * mid <= x:
-#                 start = mid
-#             else:
-#                 end = mid
-#         if end * end <= x:
-#             return int(end)
-#         return int(start)
         
