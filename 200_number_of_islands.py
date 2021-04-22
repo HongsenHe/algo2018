@@ -1,3 +1,72 @@
+from collections import deque
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        '''
+        04222021 可以套用经典BFS模板
+        对于每一个点，如果本身是岛并且之前没访问过就进行BFS判断其邻居。
+        邻居可以用DIRECTIONS表示
+        如果邻居都是岛，那就是连通块，即以当前点开始的一个岛。
+        '''
+
+        if not grid or not grid[0]:
+            return 0
+        
+        visited = set()
+        res = 0
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == '1' and (i, j) not in visited:
+                    self.bfs(i, j, grid, visited)
+                    res += 1
+                    
+        return res
+
+    def bfs(self, x, y, grid, visited):
+        '''
+        套用BFS模板，先把当前坐标以tuple的方式加进去 (x, y)
+        并且马上加入visited集合。
+        模板总是以while queue开始，先弹出来一个坐标。
+        并且对其邻居展开调查。或者图的node.get_neighbors()
+        对于每一个邻居用同样方法判断，可以包装is_valid 函数
+        如果符合要求，则把邻居加入queue 等待下一层处理
+        并且马上加入visited 集合。
+        '''
+        queue = deque([(x, y)])
+        visited.add((x, y))
+        
+        while queue:
+            x, y = queue.popleft()
+            
+            for dir_x, dir_y in DIRECTIONS:
+                new_x = x + dir_x
+                new_y = y + dir_y
+                
+                if not self.is_valid(new_x, new_y, grid, visited):
+                    continue
+                    
+                queue.append((new_x, new_y))
+                visited.add((new_x, new_y))
+    
+    def is_valid(self, x, y, grid, visited):
+        m = len(grid)
+        n = len(grid[0])
+        
+        '''
+        每题不一样，但都要判断当前坐标x, y是否出界了。
+        也要判断是否符合要求，即 grid[x][y] 是否是0 or 1
+        最后要判断是否 访问过，标准操作。
+        '''
+        if x < 0 or x >= m or y < 0 or y >= n or (x, y) in visited or grid[x][y] == '0':
+            return False
+            
+        return True
+        
+                    
+            
+# DFS
 class Solution(object):
     def numIslands(self, grid):
         """
