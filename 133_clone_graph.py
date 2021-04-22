@@ -1,6 +1,94 @@
 """
 # Definition for a Node.
 class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+from collections import deque
+
+# 04222021
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return None
+        
+        # find all original nodes
+        nodes = self.find_orig_nodes(node)
+        # copy nodes
+        mapping = self.copy_nodes(nodes)
+        # copy edges
+        self.copy_edges(nodes, mapping)
+        
+        return mapping[node]
+    
+    def find_orig_nodes(self, node):
+        queue = deque([node])
+        visited = set()
+        visited.add(node)
+        
+        '''
+        标准BFS模板
+        1. 先创建个queue和visited, 并且把root node起始点放进去
+        2. 再写个while queue
+        3. 首先pop出来一个node
+        4. 对于这个node的邻居们进行操作
+        5. 如果访问过了，怎样。如果没有加进queue待处理，并且加进visited
+        
+        '''
+        while queue:
+            cur = queue.popleft()
+            
+            for neighbor in cur.neighbors:
+                if neighbor in visited:
+                    continue
+                queue.append(neighbor)
+                visited.add(neighbor)
+                
+        return list(visited)
+    
+    def copy_nodes(self, nodes):
+        '''
+        创建个map, 即映射原node和新node的关系。
+        目前已知只有原nodes, 所以for loop 原nodes
+        既然是新node 就要创建一个新的，即 Node(node.val)
+        '''
+        mapping = {}
+        for node in nodes:
+            mapping[node] = Node(node.val)
+        
+        return mapping
+    
+    def copy_edges(self, nodes, mapping):
+        '''
+        copy original node's edges, 
+        so the for loop starts from the original node
+        复制原node的边，也就是把邻居们的关系整合。
+        
+        既然是复制, 还是从原nodes开始写个for loop
+        对于他的所有邻居们，先从mapping里找到当前邻居的复制品, 即
+        new_neighbor = mapping[neighbor]
+        然后把这个邻居加到新node的邻居集, 即
+        new_node.neighbors.append(new_neighbor)
+        
+        '''
+        for node in nodes:
+            new_node = mapping[node]
+            
+            for neighbor in node.neighbors:
+                new_neighbor = mapping[neighbor]
+                new_node.neighbors.append(new_neighbor)
+    
+    
+    
+    
+    
+
+
+    """
+# Definition for a Node.
+class Node:
     def __init__(self, val = 0, neighbors = []):
         self.val = val
         self.neighbors = neighbors
