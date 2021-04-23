@@ -41,21 +41,42 @@
 #        :rtype List[NestedInteger]
 #        """
 
+
 class Solution:
-    def depthSum(self, nestedList):
-        """
-        :type nestedList: List[NestedInteger]
-        :rtype: int
-        """
-        return self.helper(nestedList, 1)
-        
-        
-    def helper(self, nestedList, depth):
-        res = 0
-        for each in nestedList:
-            if each.isInteger():
-                res += each.getInteger() * depth
-            else:
-                res += self.helper(each.getList(), depth+1)
+    def depthSum(self, nestedList: List[NestedInteger]) -> int:
+#         # 此题DFS比较好
+#         return self.helper(nestedList, 1)
     
-        return res
+    
+#     def helper(self, nestedList, depth):
+#         res = 0
+        
+#         # 此递归的出口在哪？如果当前是个纯list, 则对于每个int进行计算作为出口。
+#         for node in nestedList:
+#             if node.isInteger():
+#                 res += node.getInteger() * depth
+#             else:   
+#                 res += self.helper(node.getList(), depth + 1)
+            
+#         return res
+            
+    
+        # BFS 解法
+        queue = collections.deque(nestedList)
+
+        depth = 1
+        total = 0
+
+        while len(queue) > 0:
+            for i in range(len(queue)):
+                nested = queue.pop()
+                if nested.isInteger():
+                    total += nested.getInteger() * depth
+                else:
+                    # 此处用这种方式
+                    queue.extendleft(nested.getList())
+            depth += 1
+
+        return total
+
+        
