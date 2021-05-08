@@ -31,16 +31,20 @@ class Solution(object):
         # return [i[0] for i in collections.Counter(nums).most_common(k)]
         
         
-        # solution 3, priority queue (max heap), 97ms
+        # solution 3, heapq in Python, 97ms
+        import heapq
 
-        # a shorter way to build a term freq dic
-        tf = collections.Counter(nums) 
-        q = PriorityQueue() # a min-heap by default, so need reverse
-        for kk, v in tf.items():
-            q.put((-v, kk)) # to be a max heap
+        def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+            heap = []
+            nums_dict = Counter(nums)
+            
+            for num, cnt in nums_dict.items():
+                heapq.heappush(heap, (-cnt, num))
+                
+            res = []
+            for i in range(k):
+                res.append(heapq.heappop(heap)[1])
+                
+            return res
         
-        res = []
-        for i in range(k):
-            res.append(q.get()[1])
-        return res
         
