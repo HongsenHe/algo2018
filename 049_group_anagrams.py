@@ -13,6 +13,3 @@ class Solution(object):
             else:
                 dic[str2] = [str1]
         return dic.values()
-
-
-        #test
