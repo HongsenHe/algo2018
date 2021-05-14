@@ -1,110 +1,98 @@
-'''
-hashmap to save key/value pair
-double linked list to save each node
-everytime call get/put function, call renew:
-    1. remove entry (node) from current double list
-    2. insert this entry to the tail
-if > capacity, remove the head node
-
-LRU: the head node is the least recent used node!
-'''
-
-
 class Node:
-    def __init__(self, key, val):
+    def __init__(self, key=None, val=None):
         self.key = key
         self.val = val
         self.prev = None
         self.next = None
-
+        
+        
 class LRUCache:
+    '''
+    基本上是HashMap + doubled LinkedList思想。
+    HashMap里key是数字，value是实际node用于创建链表。
+    
+    调用get方法: 如果在hashmap里直接返回，并且更新链表。因为已经被调用了
+    所以要更新‘最后使用时间’即LRU的意义。 
+    更新链表的算法是把这个节点放到最后（因为刚刚被使用）
+    即调用renew() 
+    
+    调用put方法: 如果key不在hashmap里，要创建一个新节点。
+    放到hashmap里，并且放到链表最后。如果目前hashmap已经超过容量了，
+    则删掉head，因为这是最旧的数据。即调用 delete_head()
+    如果key已经在hashmap里，则更新链表。
+    
+    '''
 
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.size = 0
-        self.dummyNode = Node(-1, -1)
-        self.tail = self.dummyNode
-        self.entryFinder = {}
+        self.finder = {}
+        self.dummy = Node()
+        self.tail = self.dummy
         
 
     def get(self, key: int) -> int:
-        entry = self.entryFinder.get(key)
-        if entry is None:
+        node = self.finder.get(key, None)
+        
+        if not node:
             return -1
         else:
-            self.renew(entry)
-            return entry.val
-        
+            self.renew(node)
+            return node.val
+            
 
     def put(self, key: int, value: int) -> None:
-        entry = self.entryFinder.get(key)
-        if entry is None:
-            # setup dic with key and entry(k,v)
-            entry = Node(key, value)
-            self.entryFinder[key] = entry
-            
-            # update tail with new node
-            self.tail.next = entry
-            entry.prev = self.tail
-            self.tail = entry
-            
-            if self.size < self.capacity:
-                self.size += 1
-            else:
-                # double link dummy and head.next, thus del head
-                headNode = self.dummyNode.next
-                if headNode is not None:
-                    self.dummyNode.next = headNode.next
-                    headNode.next.prev = self.dummyNode
-                # also del head (the least used node) form dic
-                del self.entryFinder[headNode.key]
-        else:
-            entry.val = value
-            self.renew(entry)
-            
-    def renew(self, entry):
-        if self.tail != entry:
-            # tmp delete entry from current position, then insert to the tail
-            prevNode = entry.prev
-            nextNode = entry.next
-            prevNode.next = nextNode
-            nextNode.prev = prevNode
-            entry.next = None
+        node = self.finder.get(key, None)
+        
+        if not node:
+            # create a new node based on current key and value and insert into finder
+            new_node = Node(key, value)
+            self.finder[key] = new_node
             
             # insert new node to the tail
-            self.tail.next = entry
-            entry.prev = self.tail
-            self.tail = entry
+            self.append_node(new_node)
+
+            # delete head if > LRU capacity
+            if len(self.finder) > self.capacity:
+                self.delete_head()
+        else:
+            # LRU algorithm
+            node.val = value
+            self.renew(node)
+                    
                 
+    def renew(self, node):
+        # change prev -> node -> next ... -> tail
+        # to prev -> next ... -> tail -> node
+        if self.tail != node:
+            # delete the node from current position
+            prev_node = node.prev
+            next_node = node.next
+            prev_node.next = next_node
+            next_node.prev = prev_node
+            node.next = None
             
-
-# another way
-import collections
-    # @param capacity, an integer
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.cache = collections.OrderedDict()
-
-    # @return an integer
-    def get(self, key):
-        if not key in self.cache:
-            return -1
-        value = self.cache.pop(key)
-        self.cache[key] = value
-        return value
-
-    # @param key, an integer
-    # @param value, an integer
-    # @return nothing
-    def put(self, key, value):
-        if key in self.cache:
-            self.cache.pop(key)
-        elif len(self.cache) == self.capacity:
-            self.cache.popitem(last=False)
-        self.cache[key] = value
+            # insert new node to the tail
+            self.append_node(node)
+            
+    def append_node(self, node):
+        # change prev -> tail to prev -> node (tail)
+        self.tail.next = node
+        node.prev = self.tail
+        self.tail = node
 
         
+    def delete_head(self):
+        # change dummy -> head -> next to dummy -> next
+        head = self.dummy.next
+        self.dummy.next = head.next
+        head.next.prev = self.dummy
 
+        del self.finder[head.key]
+        
+        
+        
+        
+        
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
