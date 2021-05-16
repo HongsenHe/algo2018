@@ -6,10 +6,18 @@
 #         self.right = None
 
 class Solution:
-    # updated 04152020
+    # updated 05152021
     def preorderTraversal(self, root):
         res = []
         sk = []
+
+        '''
+        preorder, root 左右，看到root就马上加进res list里。
+        然后移动root到left tree, 并且压入stack里。 如果到底了则弹出
+        并且移动root到当前node的right tree，即root = cur.right
+        
+        '''
+        
         
         while root or sk:
             while root:
