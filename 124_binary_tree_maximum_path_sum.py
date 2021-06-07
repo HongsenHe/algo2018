@@ -7,10 +7,13 @@
 class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
         '''
-        递归DFS，从下到上
-        分别找左子树的sum和右子树的sum, 如果小于0 就直接给0
-        还有穿过root的合集，来和max_sum比较。
-        每次都返回以当前node为root的左或者右子树的合集。
+        有几种情况：
+        在当前节点的左子树有答案，或者右子树，或者cross root
+        如果左子树的值<0, 则取0，即不走左子树。同理右子树。
+        最终看cross root 即root + left + right和最大值打擂台
+        即self.max_sum是答案
+        
+        helper函数永远返回 已当前root为起点，左或右子树的集合
         '''
         self.max_sum = float('-inf')
         self.helper(root)
@@ -29,4 +32,3 @@ class Solution:
         
         return root.val + max(left_sum, right_sum)
     
-        
