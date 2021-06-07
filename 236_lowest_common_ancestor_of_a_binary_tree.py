@@ -7,12 +7,6 @@
 
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
         '''
         如果根节点是空或者是等于p, q其中一个，那就返回根节点啦！
         如果p和q在root两边，那他们的根节点就是结果啦！
@@ -39,7 +33,9 @@ class Solution(object):
         '''
         conquer 现在有了当前节点的左右子树节点，如果都有东西，说明碰到了！
         p或者q 节点，那这个当前的root就是答案啦！一直返回上去
+
         如果只有一边有也没关系，就返回那个子树。
+        但这个子树并不是最终答案，只是当前root的答案。
         '''
         if left and right:
             return root
