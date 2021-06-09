@@ -1,5 +1,7 @@
 class Solution:
     def decodeString(self, s: str) -> str:
+        # Time, Space = O(n)
+        # 递归
         def dfs(i):
             # 每次进入一层就reset这些参数
             res, multi = "", 0
@@ -36,3 +38,26 @@ class Solution:
         
         
         return dfs(0)
+
+
+
+        # 迭代方法
+        stack = []
+        res, multi = "", 0
+        
+        for c in s:
+            # 如果[, 则把multi和当前结果放入sk, 并且reset，因为进入下一层
+            if c == '[':
+                stack.append([multi, res])
+                res, multi = "", 0
+            # 如果], 则结束了当前层，即弹出结果并且累加
+            elif c == ']':
+                cur_multi, last_res = stack.pop()
+                res = last_res + cur_multi * res
+            # 如果是数字，则累加
+            elif c.isdigit():
+                multi = multi * 10 + int(c)     
+            # 如果是字母，则加入结果集
+            else:
+                res += c
+        return res
