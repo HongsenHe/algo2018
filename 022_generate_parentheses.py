@@ -16,3 +16,26 @@ class Solution:
         # 如果闭括号数量小于开括号，可以插入当前结果， 同时数量+1（消耗一个）
         if right < left:
             self.helper(res, sub+')', left, right+1, n)
+
+    # 06162021 一样的方法，更直观的Backtracking...
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        self.helper(res, n, [], 0, 0)
+        
+        return res
+    
+    def helper(self, res, n, each, left, right):
+        if len(each) == 2 * n:
+            res.append("".join(each))
+            return
+            
+        if left < n:
+            each.append('(')
+            self.helper(res, n, each, left + 1, right)
+            each.pop()
+            
+        if right < left:
+            each.append(')')
+            self.helper(res, n, each, left, right + 1)
+            each.pop()
+            
