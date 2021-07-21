@@ -1,4 +1,4 @@
-class Solution:
+pclass Solution:
     def findMin(self, nums: List[int]) -> int:
         '''
         继续使用经典二分模板。
