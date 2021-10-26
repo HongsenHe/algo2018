@@ -2,6 +2,30 @@ import heapq
 
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        # 10262021 不用heap...
+        room_count = 0
+        rooms_end = []
+        
+        sorted_intervals = sorted(intervals, key=lambda x:x[0])
+        for interval in sorted_intervals:
+            new_room = True
+            
+            start = interval[0]
+            end = interval[1]
+            
+            for i in range(len(rooms_end)):
+                if start >= rooms_end[i]:
+                    rooms_end[i] = end
+                    new_room = False
+                    break
+                    
+            if new_room:
+                room_count += 1
+                rooms_end.append(end)
+                
+        return room_count
+
+
 
         # 05132021
             '''
