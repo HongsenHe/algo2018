@@ -1,54 +1,42 @@
 class MyQueue:
 
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.sk1 = []
-        self.sk2 = []
+        self.sk = []
         
 
     def push(self, x: int) -> None:
-        """
-        Push element x to the back of queue.
-        """
-        self.sk1.append(x)
+        self.sk.append(x)
         
 
     def pop(self) -> int:
-        """
-        Removes the element from in front of queue and returns that element.
-        """
-        if self.empty():
-            return None
-        for i in range(len(self.sk1)):
-            self.sk2.append(self.sk1.pop())
-        pop_node = self.sk2.pop()
+        tmp = []
         
-        for i in range(len(self.sk2)):
-            self.sk1.append(self.sk2.pop())
-        return pop_node
+        while self.sk:
+            tmp.append(self.sk.pop())
+            
+        res = tmp.pop()
+        
+        while tmp:
+            self.sk.append(tmp.pop())
+        return res
         
 
     def peek(self) -> int:
-        """
-        Get the front element.
-        """
-        if self.empty():
-            return None
-        for i in range(len(self.sk1)):
-            self.sk2.append(self.sk1.pop())
-        peek_node = self.sk2[-1]
-        for i in range(len(self.sk2)):
-            self.sk1.append(self.sk2.pop())
-        return peek_node
+        tmp = []
+        
+        while len(self.sk) > 1:
+            tmp.append(self.sk.pop())
+            
+        res = self.sk.pop()
+        tmp.append(res)
+        
+        while tmp:
+            self.sk.append(tmp.pop())
+        return res
         
 
     def empty(self) -> bool:
-        """
-        Returns whether the queue is empty.
-        """
-        return len(self.sk1) == 0
+        return len(self.sk) == 0
         
 
 
