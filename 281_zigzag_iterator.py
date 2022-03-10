@@ -13,6 +13,16 @@ class ZigzagIterator(object):
         :type v2: List[int]
         """
         self.queue = [v for v in (v1, v2) if v]
+        # 03092022
+        # 初始化的时候，避免其中一个为None, 这样再叫next的时候
+        # 则避免head.pop(0)的情况，一旦进入next, 则有if head判断
+        if not v1:
+            self.queue = [v2]
+        elif not v2:
+            self.queue = [v1]
+        else:
+            self.queue = [v1, v2]
+        
         
 
     def next(self):
