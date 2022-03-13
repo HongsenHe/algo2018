@@ -25,6 +25,14 @@ class RandomizedSet:
         3. 更新 dict
         4. 删除最后一个元素
         5. 从dict里也删除
+
+        03122022
+        如果random function = O(1), 则不能只用一个dictionay
+        因为dict是无序的，无法保证几率一样。必须用list并且random index来表达
+        要保证insert, remove也是O(1)， 则还需要dictionary
+        
+        注意rm function的时候，如果做到remove an element from a list O(1)
+        需要用swap来表达，即和last node 交换
     
         '''
         idx = self.val2idx[val]
