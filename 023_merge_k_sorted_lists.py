@@ -13,6 +13,7 @@ class Solution:
         if not lists:
             return None
         
+        # 03132022, O(NlogK), N是所有node个数，logK是insertion to heap
         # 常规写法，一个不断跑dummy, 一个固定点最后返回dummy_head.next
         dummy = dummy_head = ListNode(0)
         heap = []
