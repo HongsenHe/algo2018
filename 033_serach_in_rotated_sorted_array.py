@@ -20,7 +20,7 @@ class Solution:
         while left + 1 < right:
             mid = (left + right) // 2
             
-            # 升序 case2
+            # 升序 case2, 找出单调递增再缩小范围
             if nums[left] <= nums[mid]:
                 if nums[left] <= target <= nums[mid]:
                     right = mid
