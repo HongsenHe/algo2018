@@ -1,6 +1,7 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
         '''
+        03172022
         和题5类似，找到所有的palindromic substring。
         当前idx有两种情况分别判断。
         如果当前数字是中心，则整个substring是奇数位， 
