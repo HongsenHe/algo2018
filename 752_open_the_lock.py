@@ -4,7 +4,7 @@ class Solution:
         visited = {'0000'}
         
         '''
-        BFS问题，标准模板。
+        03242022 BFS问题，标准模板。
         把第一个元素放进queue中，在while 循环里不断从queue里pop出来
         设好边界，即当找到答案则返回，在限制deadends中则继续
         然后搜被pop出来Node的8个邻居，即每个数字可以加减1，可以用helper()
