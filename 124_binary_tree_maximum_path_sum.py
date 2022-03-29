@@ -14,21 +14,24 @@ class Solution:
         即self.max_sum是答案
         
         helper函数永远返回 已当前root为起点，左或右子树的集合
+        
+        此题和543 diameter of binary tree比较像啊
         '''
         self.max_sum = float('-inf')
-        self.helper(root)
+
+        def helper(root):
+            if not root:
+                return 0
+
+            left_sum = max(helper(root.left), 0)
+            right_sum = max(helper(root.right), 0)
+
+            cross_root = root.val + left_sum + right_sum
+            self.max_sum = max(self.max_sum, cross_root)
+
+            return root.val + max(left_sum, right_sum)
+        
+        helper(root)
+
         return self.max_sum
-    
-    
-    def helper(self, root):
-        if not root:
-            return 0
-        
-        left_sum = max(self.helper(root.left), 0)
-        right_sum = max(self.helper(root.right), 0)
-        cross_root = root.val + left_sum + right_sum
-        
-        self.max_sum = max(self.max_sum, cross_root)
-        
-        return root.val + max(left_sum, right_sum)
     
