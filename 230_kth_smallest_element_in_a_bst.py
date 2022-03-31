@@ -6,6 +6,7 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
+        # BST 的中序遍历的特制：有序啊！
         sk = []
         while root or sk:
             if root:
