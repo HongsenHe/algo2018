@@ -18,17 +18,29 @@
 #         Returns the next element in the iteration.
 #         :rtype: int
 #         """
-'''
-搞个大cache！如果Peek就是返回大缓存，如果next就是更新这个缓存啦！
-'''
 class PeekingIterator(object):
     def __init__(self, iterator):
         """
         Initialize your data structure here.
         :type iterator: Iterator
         """
+        
+        '''
+        用一个next变量来表示当前iterator的下一个变量
+        如果调用peek() 则直接返回此next (peak)
+        
+        如果调用next() 则需要更新当前指针，并且返回next
+        因为next已经表示了下一个
+        
+        更新当前指针：如果下一个还有，则更新next
+        如果没了，就是None
+        
+        hasNext(), 如果iter还有，或者next变量还有
+        相当于提前拿出来下一个元素，放到next里
+        
+        '''
         self.iter = iterator
-        self.cache = iterator.next()
+        self.next1 = iterator.next()
 
         
     def peek(self):
@@ -36,17 +48,17 @@ class PeekingIterator(object):
         Returns the next element in the iteration without advancing the iterator.
         :rtype: int
         """
-        return self.cache
+        return self.next1
 
     def next(self):
         """
         :rtype: int
         """
-        res = self.cache
+        res = self.next1
         if self.iter.hasNext():
-            self.cache = self.iter.next()
+            self.next1 = self.iter.next()
         else:
-            self.cache = None
+            self.next1 = None
         return res
         
 
@@ -54,7 +66,7 @@ class PeekingIterator(object):
         """
         :rtype: bool
         """
-        return self.iter.hasNext() or self.cache is not None
+        return self.iter.hasNext() or self.next1 is not None
 # Your PeekingIterator object will be instantiated and called as such:
 # iter = PeekingIterator(Iterator(nums))
 # while iter.hasNext():
