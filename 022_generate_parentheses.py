@@ -2,6 +2,15 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
         self.helper(res, '', 0, 0, n)
+        
+        '''
+        04202022
+        n个pairs 则最终长度是2*n, 即递归跳出条件。
+        合法的括号必须是一对 () 那就要先放( , 一直到 left < n
+        再放), 直到 right < left (虽然最后也是right < n)
+        '''
+        
+
         return res
     
     def helper(self, res, sub, left, right, n):
